@@ -6,7 +6,7 @@ import pandas as pd
 import plotly.express as px
 # from twilio.rest import Client
 
-df = pd.read_csv("./dataset/4-soils-dataset-new.csv")
+df = pd.read_csv("./Dataset/4-soils-dataset-new.csv")
 
 # Load the ML model
 try:
