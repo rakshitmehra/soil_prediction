@@ -8,3 +8,4 @@ matplotlib
 seaborn
 plotly
 joblib
+scikit-learn
