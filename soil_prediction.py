@@ -13,6 +13,7 @@ try:
     model = joblib.load('./SavedModels/new-4-soils-stacking.joblib')
 except Exception as e:
     st.error(f"Error loading the model: {e}")
+    model = None
 
 # Twilio Configuration
 # twilio_account_sid = "ACd81bfc749c28496c26b3b03dbb62985f"
@@ -105,9 +106,6 @@ if selected == 'Data Visualization':
     fig = px.scatter(df, x=x_axis, y=y_axis, color='Label', title="Feature Relationship by Soil Type")
     st.plotly_chart(fig)
 
-
-
-
 # Soil Prediction Page
 if selected == 'Soil Prediction':
     # Input Fields
@@ -122,9 +120,12 @@ if selected == 'Soil Prediction':
 
     # Soil Prediction Function
     def predict_soil(input_features):
-        prediction = model.predict([input_features])[0]
-        soil_types = ['Alluvial Soil', 'Desert Soil', 'Loamy Soil', 'Red Soil']
-        return soil_types[prediction] if 0 <= prediction < len(soil_types) else "Unknown Soil Type"
+        if model is not None:
+            prediction = model.predict([input_features])[0]
+            soil_types = ['Alluvial Soil', 'Desert Soil', 'Loamy Soil', 'Red Soil']
+            return soil_types[prediction] if 0 <= prediction < len(soil_types) else "Unknown Soil Type"
+        else:
+            return "Model not loaded"
 
     # Submit Button
     if st.button("Predict Soil"):
